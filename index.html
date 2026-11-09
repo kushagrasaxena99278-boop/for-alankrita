@@ -532,7 +532,7 @@
       </div>
     </div>
 
-    <!-- 3. CAROUSEL SCREEN (50% SCREEN HERO PHOTO) -->
+    <!-- 3. CAROUSEL SCREEN (HERO PHOTO) -->
     <div id="carousel-screen">
       <div class="section-tracker" id="tracker-text">Box Tracker</div>
 
@@ -584,7 +584,6 @@
         <button class="btn-yes" onclick="nextQuestion()">YES ✨</button>
         <button class="btn-no" id="runaway-btn" onmouseover="dodgeButton()" onclick="dodgeButton()">NO 🏃</button>
       </div>
-
     </div>
 
     <!-- 4. FINALE SCREEN -->
@@ -603,7 +602,6 @@
   </div>
 
   <script>
-    // Universal Multi-Format Audio Engine
     let currentAudio = null;
 
     function playMultiAudio(baseName) {
@@ -612,46 +610,47 @@
         currentAudio.currentTime = 0;
       }
 
-      const extensions = ['mp3', 'm4a', 'mp4', 'wav'];
-      let extIdx = 0;
+      // Exact uploaded names match (.mp3.mpeg and .mp3)
+      const filenames = [
+        `${baseName}.mp3.mpeg`,
+        `${baseName}.mp3`,
+        `${baseName}.m4a`,
+        `${baseName}.mp4`
+      ];
 
-      function tryNextExt() {
-        if (extIdx >= extensions.length) {
-          console.warn('Audio not found for:', baseName);
-          return;
-        }
-        const ext = extensions[extIdx++];
-        const audio = new Audio(`${baseName}.${ext}`);
+      let fIdx = 0;
+      function tryNext() {
+        if (fIdx >= filenames.length) return;
+        const audio = new Audio(filenames[fIdx++]);
         audio.loop = true;
-
         audio.play().then(() => {
           currentAudio = audio;
-        }).catch(err => {
-          tryNextExt();
+        }).catch(() => {
+          tryNext();
         });
       }
-
-      tryNextExt();
+      tryNext();
     }
 
-    // Universal Multi-Format Image Engine
     function setMultiImage(imgElem, baseName) {
-      const extensions = ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'];
-      let extIdx = 0;
+      // Exact uploaded names match (.jpg.jpeg and .jpeg)
+      const filenames = [
+        `${baseName}.jpg.jpeg`,
+        `${baseName}.jpeg`,
+        `${baseName}.jpg`,
+        `${baseName}.png`
+      ];
 
-      function tryNextImg() {
-        if (extIdx >= extensions.length) {
-          return;
-        }
-        const ext = extensions[extIdx++];
-        imgElem.src = `${baseName}.${ext}`;
+      let fIdx = 0;
+      function tryNext() {
+        if (fIdx >= filenames.length) return;
+        imgElem.src = filenames[fIdx++];
       }
 
       imgElem.onerror = function() {
-        tryNextImg();
+        tryNext();
       };
-
-      tryNextImg();
+      tryNext();
     }
 
     function checkPassword() {
