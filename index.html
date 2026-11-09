@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Shubh Deepawali Alankrita ✨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Rozha+One&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background: #050001;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    .app-screen {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background: radial-gradient(circle at 50% 28%, #85031a 0%, #4f000d 44%, #200005 84%, #0c0002 100%);
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.98), 0 0 30px rgba(255, 200, 50, 0.3);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 14px 14px 24px;
+      overflow: hidden;
+    }
+
+    .hanging-garland {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 38px;
+      background-image: 
+        radial-gradient(circle at 10% 10px, #fff5b3 3.5px, #ffa500 7px, transparent 12px),
+        radial-gradient(circle at 26% 15px, #fff5b3 4px, #ffa500 8px, transparent 14px),
+        radial-gradient(circle at 42% 10px, #fff5b3 3.5px, #ffa500 7px, transparent 12px),
+        radial-gradient(circle at 58% 15px, #fff5b3 4px, #ffa500 8px, transparent 14px),
+        radial-gradient(circle at 74% 10px, #fff5b3 3.5px, #ffa500 7px, transparent 12px),
+        radial-gradient(circle at 90% 14px, #fff5b3 3.5px, #ffa500 7px, transparent 12px);
+      filter: drop-shadow(0 4px 12px rgba(255, 200, 0, 0.9));
+      z-index: 2;
+      pointer-events: none;
+    }
+    .hanging-garland::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 18px;
+      border-bottom: 2px solid rgba(255, 215, 0, 0.55);
+      border-radius: 50% / 100%;
+    }
+
+    .sparkle-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: 
+        radial-gradient(1.5px 1.5px at 30px 45px, #ffd700, transparent),
+        radial-gradient(2.5px 2.5px at 95px 125px, #fff8dc, transparent),
+        radial-gradient(2px 2px at 180px 75px, #ffb300, transparent),
+        radial-gradient(2.5px 2.5px at 280px 190px, #ffd700, transparent),
+        radial-gradient(1.5px 1.5px at 350px 90px, #fff, transparent);
+      background-size: 320px 320px;
+      opacity: 0.75;
+      z-index: 1;
+    }
+
+    .glow-diya-l {
+      position: absolute;
+      left: -6px;
+      top: 38%;
+      font-size: 26px;
+      filter: drop-shadow(0 0 16px #ff8800) drop-shadow(0 0 35px #ff2200);
+      transform: scaleX(-1);
+      z-index: 2;
+    }
+    .glow-diya-r {
+      position: absolute;
+      right: -6px;
+      top: 24%;
+      font-size: 26px;
+      filter: drop-shadow(0 0 16px #ff8800) drop-shadow(0 0 35px #ff2200);
+      z-index: 2;
+    }
+
+    #gate-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      perspective: 1200px;
+      background: #100003;
+    }
+
+    .door {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(135deg, #320007 0%, #570212 50%, #1e0004 100%);
+      transition: transform 1.6s cubic-bezier(0.77, 0, 0.175, 1);
+      box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.9);
+      border-bottom: 5px solid #ffd700;
+    }
+    .door::after {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1.5px dashed rgba(255, 215, 0, 0.35);
+    }
+    .door-left { left: 0; border-right: 2px solid #ffd700; transform-origin: left center; }
+    .door-right { right: 0; border-left: 2px solid #ffd700; transform-origin: right center; }
+
+    #gate-overlay.gate-open .door-left { transform: rotateY(-110deg); }
+    #gate-overlay.gate-open .door-right { transform: rotateY(110deg); }
+    #gate-overlay.gate-open .lock-card { opacity: 0; transform: scale(0.65); pointer-events: none; transition: 0.6s ease; }
+
+    .lock-card {
+      position: relative;
+      z-index: 10;
+      background: linear-gradient(165deg, rgba(55, 1, 10, 0.97) 0%, rgba(20, 0, 4, 0.98) 100%);
+      border: 2px solid #ffd700;
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.6), inset 0 0 20px rgba(255, 165, 0, 0.35);
+      padding: 30px 22px;
+      border-radius: 22px;
+      text-align: center;
+      width: 86%;
+      max-width: 320px;
+    }
+    .lock-icon { font-size: 44px; margin-bottom: 8px; filter: drop-shadow(0 0 14px rgba(255, 215, 0, 0.85)); }
+    .lock-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff2a3;
+      letter-spacing: 2px;
+    }
+    .lock-subtitle { font-size: 13px; color: #ffe6ba; margin: 8px 0 18px; }
+    .pass-input {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      border: 1.8px solid #ffd700;
+      background: rgba(8, 0, 2, 0.85);
+      color: #fff;
+      font-size: 16px;
+      text-align: center;
+      letter-spacing: 2px;
+      outline: none;
+      margin-bottom: 16px;
+    }
+    .pass-input:focus { border-color: #fff; box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); }
+    .unlock-btn {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fff2a3 0%, #ffd700 50%, #c48b16 100%);
+      color: #1a0003;
+      font-family: 'Cinzel Decorative', serif;
+      font-weight: 900;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.5);
+    }
+    .error-text { color: #ff7575; font-size: 12px; margin-top: 10px; min-height: 18px; }
+
+    #dashboard {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 25px;
+      z-index: 3;
+    }
+    .dash-header { text-align: center; margin-bottom: 25px; }
+    .dash-header h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 52px;
+      color: #fff2a3;
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.85), 0 0 35px rgba(255, 140, 0, 0.6);
+      line-height: 1.15;
+    }
+    .dash-header p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: #ffe6ba;
+      margin-top: 4px;
+    }
+    .boxes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; }
+    .gift-box-card {
+      background: linear-gradient(165deg, rgba(68, 1, 12, 0.92) 0%, rgba(26, 0, 4, 0.96) 100%);
+      border: 1.8px solid #ffd700;
+      border-radius: 18px;
+      padding: 22px 10px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(255, 215, 0, 0.2);
+      transition: transform 0.2s;
+    }
+    .gift-box-card:active { transform: scale(0.96); }
+    .gift-box-icon { font-size: 40px; margin-bottom: 8px; filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6)); }
+    .gift-box-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #fff2a3;
+      line-height: 1.35;
+    }
+    .gift-box-subtitle { font-size: 11px; color: #ffd9a6; margin-top: 5px; }
+
+    #carousel-screen {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      z-index: 3;
+    }
+
+    .section-tracker {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #ffeb99;
+      text-shadow: 0 0 14px rgba(255, 215, 0, 0.85);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+
+    .hero-photo-card {
+      position: relative;
+      width: 100%;
+      height: 48vh;
+      max-height: 380px;
+      border-radius: 22px;
+      border: 3.5px solid #ffd700;
+      box-shadow: 0 0 35px rgba(255, 215, 0, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(0,0,0,0.9);
+      overflow: hidden;
+      background: #1a0004;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-photo-card::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1.5px dashed rgba(255, 235, 130, 0.6);
+      border-radius: 16px;
+      pointer-events: none;
+    }
+
+    .sacred-mid-row {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      z-index: 5;
+      padding: 0 4px;
+    }
+
+    .left-sacred-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex: 1;
+    }
+    .shubh-labh-title {
+      font-family: 'Rozha One', serif;
+      font-size: 17px;
+      color: #ffea88;
+      text-shadow: 0 0 12px rgba(255, 215, 0, 0.95), 0 2px 5px rgba(0,0,0,0.9);
+      letter-spacing: 1px;
+    }
+    .idols-trio {
+      font-size: 24px;
+      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.85));
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .center-charan-orb {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff7b3 0%, #ffd700 45%, #e6a100 80%, #996300 100%);
+      border: 3.5px solid #fffdf0;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.95), 0 4px 15px rgba(0, 0, 0, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 0 4px;
+    }
+    .charan-svg-art {
+      width: 52px;
+      height: 52px;
+      filter: drop-shadow(0 2px 6px rgba(120, 0, 10, 0.85));
+    }
+    .orb-diya-flame {
+      position: absolute;
+      bottom: -14px;
+      font-size: 20px;
+      filter: drop-shadow(0 0 12px rgba(255, 140, 0, 0.95));
+    }
+
+    .right-sacred-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex: 1;
+    }
+    .coins-garland-art {
+      font-size: 26px;
+      filter: drop-shadow(0 0 12px rgba(255, 200, 0, 0.95));
+      line-height: 1;
+    }
+    .dhan-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #ffe6ba;
+      margin-top: 3px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+    }
+
+    .royal-filigree-card {
+      width: 100%;
+      background: linear-gradient(165deg, rgba(68, 1, 14, 0.95) 0%, rgba(24, 0, 4, 0.98) 100%);
+      border: 2px solid #ffd700;
+      border-radius: 18px;
+      padding: 14px 16px;
+      text-align: center;
+      margin-bottom: 14px;
+      min-height: 85px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), inset 0 0 20px rgba(255, 215, 0, 0.25);
+    }
+    .royal-filigree-card::after {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border: 1px dashed rgba(255, 235, 130, 0.45);
+      border-radius: 12px;
+      pointer-events: none;
+    }
+    .card-question-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 15.5px;
+      line-height: 1.5;
+      color: #ffffff;
+      font-weight: 600;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+      position: relative;
+      z-index: 2;
+    }
+
+    .actions-stage {
+      position: relative;
+      width: 100%;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .btn-yes {
+      padding: 12px 42px;
+      background: linear-gradient(135deg, #fff7b8 0%, #ffd700 45%, #e6a100 80%, #b37400 100%);
+      color: #0d0002 !important;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 1.5px;
+      border: 2.5px solid #ffffff;
+      border-radius: 35px;
+      box-shadow: 0 0 35px rgba(255, 215, 0, 0.95), 0 5px 15px rgba(0,0,0,0.6);
+      cursor: pointer;
+    }
+    .btn-yes:active { transform: scale(0.96); }
+
+    .btn-no {
+      padding: 12px 30px;
+      background: linear-gradient(135deg, rgba(80, 0, 15, 0.85) 0%, rgba(28, 0, 5, 0.95) 100%);
+      color: #ffd4d4;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      border: 1.8px solid rgba(255, 215, 0, 0.6);
+      border-radius: 35px;
+      position: absolute;
+      transition: left 0.15s ease, top 0.15s ease;
+      cursor: pointer;
+    }
+
+    #finale-screen {
+      display: none;
+      width: 100%;
+      text-align: center;
+      padding: 20px 6px;
+      z-index: 3;
+    }
+    .finale-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 52px;
+      color: #fff2a3;
+      text-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
+      margin-bottom: 15px;
+    }
+    .finale-photo-box {
+      width: 100%;
+      height: 38vh;
+      border-radius: 20px;
+      border: 3.5px solid #ffd700;
+      overflow: hidden;
+      margin-bottom: 16px;
+      box-shadow: 0 0 35px rgba(255, 215, 0, 0.85);
+    }
+    .finale-photo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .finale-letter {
+      background: linear-gradient(165deg, rgba(65, 1, 12, 0.96) 0%, rgba(22, 0, 4, 0.98) 100%);
+      border: 2px solid #ffd700;
+      border-radius: 20px;
+      padding: 24px 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 15.5px;
+      line-height: 1.75;
+      color: #fff4e3;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(255, 215, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-screen">
+    <div class="hanging-garland"></div>
+    <div class="sparkle-particles"></div>
+
+    <div class="glow-diya-l">🪔</div>
+    <div class="glow-diya-r">🪔</div>
+
+    <!-- 1. ENTRY SHAHI GATE -->
+    <div id="gate-overlay">
+      <div class="door door-left"></div>
+      <div class="door door-right"></div>
+      
+      <div class="lock-card">
+        <div class="lock-icon">🔒🪔</div>
+        <h3 class="lock-title">Shubh Pravesh</h3>
+        <p class="lock-subtitle">Alankrita, secret password enter karein:</p>
+        
+        <input type="text" id="secretPass" placeholder="DD/MM/YYYY" class="pass-input" autocomplete="off" />
+        <button onclick="checkPassword()" class="unlock-btn">Unlock Darwaza ✨</button>
+        <div id="error-msg" class="error-text"></div>
+      </div>
+    </div>
+
+    <!-- 2. DASHBOARD -->
+    <div id="dashboard">
+      <div class="dash-header">
+        <h1>Happy Diwali</h1>
+        <p>A Journey of Lights & Love, Just for You ✨</p>
+      </div>
+
+      <div class="boxes-grid">
+        <div class="gift-box-card" onclick="openBox(0)">
+          <div class="gift-box-icon">🪔</div>
+          <div class="gift-box-title">The Golden Spark</div>
+          <div class="gift-box-subtitle">Part 1 (5 Moments)</div>
+        </div>
+
+        <div class="gift-box-card" onclick="openBox(1)">
+          <div class="gift-box-icon">💫</div>
+          <div class="gift-box-title">Sweet Nostalgia</div>
+          <div class="gift-box-subtitle">Part 2 (5 Moments)</div>
+        </div>
+
+        <div class="gift-box-card" onclick="openBox(2)">
+          <div class="gift-box-icon">✨</div>
+          <div class="gift-box-title">Endless Lights</div>
+          <div class="gift-box-subtitle">Part 3 (5 Moments)</div>
+        </div>
+
+        <div class="gift-box-card" onclick="openBox(3)">
+          <div class="gift-box-icon">💖</div>
+          <div class="gift-box-title">The Promise of Forever</div>
+          <div class="gift-box-subtitle">Part 4 (3 Moments)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. CAROUSEL SCREEN (50% SCREEN HERO PHOTO) -->
+    <div id="carousel-screen">
+      <div class="section-tracker" id="tracker-text">Box Tracker</div>
+
+      <div class="hero-photo-card">
+        <img id="display-photo" src="" alt="" />
+      </div>
+
+      <div class="sacred-mid-row">
+        <div class="left-sacred-badge">
+          <div class="shubh-labh-title">शुभ लाभ</div>
+          <div class="idols-trio">🪷 👑 🪷</div>
+        </div>
+
+        <div class="center-charan-orb">
+          <svg class="charan-svg-art" viewBox="0 0 100 100">
+            <g fill="#c9021b" stroke="#75000d" stroke-width="1.5">
+              <ellipse cx="38" cy="58" rx="12" ry="18" transform="rotate(-5 38 58)" />
+              <circle cx="28" cy="34" r="3.5" />
+              <circle cx="35" cy="31" r="3.8" />
+              <circle cx="42" cy="33" r="3.5" />
+              <circle cx="47" cy="38" r="3" />
+              <circle cx="50" cy="44" r="2.5" />
+            </g>
+            <g fill="#c9021b" stroke="#75000d" stroke-width="1.5">
+              <ellipse cx="62" cy="58" rx="12" ry="18" transform="rotate(5 62 58)" />
+              <circle cx="72" cy="34" r="3.5" />
+              <circle cx="65" cy="31" r="3.8" />
+              <circle cx="58" cy="33" r="3.5" />
+              <circle cx="53" cy="38" r="3" />
+              <circle cx="50" cy="44" r="2.5" />
+            </g>
+            <text x="38" y="62" font-size="12" fill="#ffd700" font-weight="bold" text-anchor="middle">卐</text>
+            <text x="62" y="62" font-size="12" fill="#ffd700" font-weight="bold" text-anchor="middle">卐</text>
+          </svg>
+          <div class="orb-diya-flame">🪔</div>
+        </div>
+
+        <div class="right-sacred-badge">
+          <div class="coins-garland-art">🪙 🌼 🪙</div>
+          <div class="dhan-title">धन-वैभव</div>
+        </div>
+      </div>
+
+      <div class="royal-filigree-card">
+        <div class="card-question-text" id="question-text">Loading question...</div>
+      </div>
+
+      <div class="actions-stage">
+        <button class="btn-yes" onclick="nextQuestion()">YES ✨</button>
+        <button class="btn-no" id="runaway-btn" onmouseover="dodgeButton()" onclick="dodgeButton()">NO 🏃</button>
+      </div>
+
+    </div>
+
+    <!-- 4. FINALE SCREEN -->
+    <div id="finale-screen">
+      <h1 class="finale-title">Always & Forever</h1>
+      <div class="finale-photo-box">
+        <img id="finale-photo" src="" alt="" />
+      </div>
+      <div class="finale-letter">
+        <p>Aapki muskaan meri har Diwali ka sabse khoobsurat noor hai.</p>
+        <p style="margin-top: 12px;">Yeh rishta hamesha aise hi jagmagata rahe, har saal, har lamha.</p>
+        <p style="margin-top: 16px; font-weight: 700; color: #fff2a3; font-size: 17px;">Shubh Deepawali, Meri Laxmi! 🪔✨</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Universal Multi-Format Audio Engine
+    let currentAudio = null;
+
+    function playMultiAudio(baseName) {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+
+      const extensions = ['mp3', 'm4a', 'mp4', 'wav'];
+      let extIdx = 0;
+
+      function tryNextExt() {
+        if (extIdx >= extensions.length) {
+          console.warn('Audio not found for:', baseName);
+          return;
+        }
+        const ext = extensions[extIdx++];
+        const audio = new Audio(`${baseName}.${ext}`);
+        audio.loop = true;
+
+        audio.play().then(() => {
+          currentAudio = audio;
+        }).catch(err => {
+          tryNextExt();
+        });
+      }
+
+      tryNextExt();
+    }
+
+    // Universal Multi-Format Image Engine
+    function setMultiImage(imgElem, baseName) {
+      const extensions = ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'];
+      let extIdx = 0;
+
+      function tryNextImg() {
+        if (extIdx >= extensions.length) {
+          return;
+        }
+        const ext = extensions[extIdx++];
+        imgElem.src = `${baseName}.${ext}`;
+      }
+
+      imgElem.onerror = function() {
+        tryNextImg();
+      };
+
+      tryNextImg();
+    }
+
+    function checkPassword() {
+      const val = document.getElementById('secretPass').value.trim();
+      const sanitized = val.replace(/\D/g, '');
+
+      if (val === "19/03/2026" || sanitized === "19032026") {
+        document.getElementById('gate-overlay').classList.add('gate-open');
+        playMultiAudio('entry_song');
+        setTimeout(() => {
+          document.getElementById('gate-overlay').style.display = 'none';
+        }, 1600);
+      } else {
+        const err = document.getElementById('error-msg');
+        err.innerText = "Galat password! Yaad kijiye hamari khaas date 🙈";
+      }
+    }
+
+    document.getElementById('secretPass').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') checkPassword();
+    });
+
+    const boxesData = [
+      {
+        name: "The Golden Spark",
+        photoBase: "photo1",
+        questions: [
+          "Can I ask for the right to see your sweet smile every single day?",
+          "Do you know that whenever you laugh, it truly feels like the lights of Diwali?",
+          "Aren't we together the sweetest and most adorable duo in the whole world?",
+          "Will you always keep talking to me just like this?",
+          "Shall we light the very first diya of Diwali in both of our names?"
+        ]
+      },
+      {
+        name: "Sweet Nostalgia",
+        photoBase: "photo2",
+        questions: [
+          "Do you still remember that first long talk of ours that just wouldn't end?",
+          "Whenever you get upset, isn't cheering you up my absolute favorite duty?",
+          "Doesn't taking a walk with you in the cool breeze feel like the most peaceful thing ever?",
+          "Can any festival ever feel truly complete without you around?",
+          "Are you ready to tolerate all my little mischievous antics forever?"
+        ]
+      },
+      {
+        name: "Endless Lights",
+        photoBase: "photo3",
+        questions: [
+          "At every turn of life, will we always walk hand in hand together?",
+          "Do you know that all my happiness begins only with you now?",
+          "Even if the world feels a little dark at times, will you always stay as my light?",
+          "Will we keep celebrating every single Diwali together, always?",
+          "Do you know just how deeply special you are to me?"
+        ]
+      },
+      {
+        name: "The Promise of Forever",
+        photoBase: "photo4",
+        questions: [
+          "Will you be my best friend and my lifelong companion through everything?",
+          "Can I keep my promise to love you endlessly, always and forever?",
+          "Will you officially be my forever Girlfriend and my Laxmi?"
+        ]
+      }
+    ];
+
+    let currentBoxIdx = 0;
+    let currentQIdx = 0;
+
+    function openBox(index) {
+      currentBoxIdx = index;
+      currentQIdx = 0;
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('carousel-screen').style.display = 'flex';
+      
+      playMultiAudio(`box${index + 1}_song`);
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const box = boxesData[currentBoxIdx];
+      const qNum = currentQIdx + 1;
+      const totalQ = box.questions.length;
+
+      document.getElementById('tracker-text').innerText = `${box.name} (${qNum}/${totalQ})`;
+      document.getElementById('question-text').innerText = box.questions[currentQIdx];
+      
+      const photoElem = document.getElementById('display-photo');
+      setMultiImage(photoElem, box.photoBase);
+
+      const noBtn = document.getElementById('runaway-btn');
+      noBtn.style.left = 'auto';
+      noBtn.style.top = 'auto';
+      noBtn.style.position = 'relative';
+    }
+
+    function nextQuestion() {
+      const box = boxesData[currentBoxIdx];
+      if (currentQIdx < box.questions.length - 1) {
+        currentQIdx++;
+        loadQuestion();
+      } else {
+        if (currentBoxIdx < 3) {
+          document.getElementById('carousel-screen').style.display = 'none';
+          document.getElementById('dashboard').style.display = 'flex';
+          playMultiAudio('entry_song');
+        } else {
+          document.getElementById('carousel-screen').style.display = 'none';
+          document.getElementById('finale-screen').style.display = 'block';
+          setMultiImage(document.getElementById('finale-photo'), 'photo4');
+          playMultiAudio('finale_song');
+        }
+      }
+    }
+
+    function dodgeButton() {
+      const btn = document.getElementById('runaway-btn');
+      btn.style.position = 'fixed';
+      
+      const maxX = window.innerWidth - 110;
+      const maxY = window.innerHeight - 60;
+      
+      const randX = Math.max(20, Math.floor(Math.random() * maxX));
+      const randY = Math.max(70, Math.floor(Math.random() * maxY));
+      
+      btn.style.left = `${randX}px`;
+      btn.style.top = `${randY}px`;
+    }
+  </script>
+</body>
+</html>
